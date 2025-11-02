@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { BiCart, BiStore } from "react-icons/bi";
+import { BiCart, BiSolidLogOutCircle} from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiHome } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
+import { MdReviews,MdContactPhone } from "react-icons/md";
+import { PiFlowerLotusFill } from "react-icons/pi";
+
+import { FaShoppingCart ,FaShopify} from "react-icons/fa";
 
 export default function Header() {
 	const navigate = useNavigate();
@@ -18,20 +22,18 @@ export default function Header() {
                                 setIsOpen(close);
                             }}/>
 							<img
-								className="w-40px] h-[40px] object-cover cursor-pointer"
-								onClick={() => {
-									navigate("/");
-								}}
+								className="w-[150px] h-[80px] object-cover cursor-pointer"
+
 								src="/logo.png"
 								alt="Logo"
 							/>
 						</div>
-						<div className="w-full h-full flex flex-col p-[45px] items-start">
+						<div className="w-full h-full flex flex-col p-[45px] items-start gap-8">
 							<button
 								className="text-accent text-2xl flex flex-row items-center"
 								onClick={() => {
 									setIsOpen(false);
-									navigate("/");
+									navigate("/home");
 								}}
 							>
 								<HiHome className="text-accent text-2xl mr-2" />
@@ -45,7 +47,7 @@ export default function Header() {
 									navigate("/products");
 								}}
 							>
-								<BiStore className="text-accent text-2xl mr-2" />
+								<FaShopify className="text-accent text-2xl mr-2" />
 								Products
 							</button>
                             {/* cart */}
@@ -56,18 +58,64 @@ export default function Header() {
 									navigate("/cart");
 								}}
 							>
-								<BiCart className="text-accent text-2xl mr-2" />
+								<FaShoppingCart className="text-accent text-2xl mr-2" />
 								Cart
 							</button>
+							{/* reviews */}
+							<button
+								className="text-accent text-2xl flex flex-row items-center"
+								onClick={() => {
+									setIsOpen(false);
+									navigate("/reviews");
+								}}
+							>
+								<MdReviews className="text-accent text-2xl mr-2" />
+								Reviews
+							</button>
+							{/* about us */}
+							<button
+								className="text-accent text-2xl flex flex-row items-center"
+								onClick={() => {
+									setIsOpen(false);	
+									navigate("/about-us");	
+								}}
+							>	
+								<PiFlowerLotusFill className="text-accent text-2xl mr-2" />
+								About Us
+							</button>
+							{/* contact us */}
+							<button
+								className="text-accent text-2xl flex flex-row items-center"
+								onClick={() => {
+									setIsOpen(false);
+									navigate("/contact-us");
+								}}
+							>
+								<MdContactPhone className="text-accent text-2xl mr-2" />
+								Contact Us
+							</button>
+							{token && (
+								<button
+									className="text-accent text-2xl flex flex-row items-center"
+									onClick={() => {
+										localStorage.removeItem("token");
+										setIsOpen(false);
+										navigate("/login");
+									}}
+								>
+									<BiSolidLogOutCircle className="text-accent text-3xl mr-1" />
+									Logout
+								</button>
+							)}
+
 						</div>
+
 					</div>
 				</div>
 			)}
 			<img
 				className="w-[150px] h-[80px] object-cover absolute md:left-[40px] cursor-pointer"
-				onClick={() => {
-					navigate("/");
-				}}
+
 				src="/logo.png"
 				alt="Logo"
 			/>
@@ -76,8 +124,8 @@ export default function Header() {
                     setIsOpen(true);
                 }
             }/>
-			<div className="hidden w-full md:flex justify-center items-center">
-				<Link to="/" className="text-white text-xl ">
+			<div className="hidden w-full md:flex justify-center items-center ">
+				<Link to="/home" className="text-white text-xl ">
 					Home
 				</Link>
 				<Link to="/products" className="ml-4 text-white text-xl">
