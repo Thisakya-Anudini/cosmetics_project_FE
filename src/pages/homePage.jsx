@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import ProductCard from "../components/productCard"; // Use your own ProductCard component
+import ProductCard from "../components/productCard"; // Your ProductCard component
 import Loader from "../components/loader"; // Your Loader component
 
 const HomePage = () => {
@@ -12,24 +12,30 @@ const HomePage = () => {
   // Example featured product IDs (Replace these with actual IDs from your database)
   const featuredIds = ["P003", "P008", "P006", "P004"];
 
+
   useEffect(() => {
-    const fetchFeatured = async () => {
-      try {
-        const requests = featuredIds.map((id) =>
-          axios.get(import.meta.env.VITE_BACKEND_URL + `/api/products/${id}`)
-        );
-        const responses = await Promise.all(requests);
-        const products = responses.map((res) => res.data);
-        setFeaturedProducts(products);
-      } catch (error) {
-        console.error("Error fetching featured products:", error);
-      } finally {
-        setLoading(false);
-      }
+    // Refactored to use `.then` and `.catch` instead of async/await
+    const fetchFeatured = () => {
+      const requests = featuredIds.map((id) =>
+        axios.get(import.meta.env.VITE_BACKEND_URL + `/api/products/${id}`)
+      );
+
+      // Make all requests concurrently using `Promise.all`
+      Promise.all(requests)
+        .then((responses) => {
+          const products = responses.map((res) => res.data);
+          setFeaturedProducts(products); // Set the products to the state
+        })
+        .catch((error) => {
+          console.error("Error fetching featured products:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Stop the loading spinner once the data is fetched
+        });
     };
 
     fetchFeatured();
-  }, []); // Run once on component mount
+  }, []); // Only run once when the component is mounted
 
   return (
     <div className="py-16 px-4 bg-gray-50">
@@ -42,7 +48,7 @@ const HomePage = () => {
         <div className="mt-8">
           <button
             onClick={() => navigate("/products")}
-            className="bg-rose-400 text-black py-3 px-6 rounded-lg hover:bg-amber-500 transition duration-300 font-semibold"
+            className="bg-yellow-500 text-black py-3 px-6 rounded-lg hover:bg-yellow-400 transition duration-300"
           >
             Shop Now
           </button>
@@ -74,7 +80,7 @@ const HomePage = () => {
         <div className="mt-8 text-center">
           <button
             onClick={() => navigate("/about-us")}
-            className="bg-rose-400 text-black py-3 px-6 rounded-lg hover:bg-amber-500 transition duration-300 font-semibold"
+            className="bg-yellow-500 text-black py-3 px-6 rounded-lg hover:bg-yellow-400 transition duration-300"
           >
             Learn More
           </button>
@@ -83,23 +89,36 @@ const HomePage = () => {
 
       {/* Testimonials Section */}
       <section className="mt-16">
-        <h2 className="text-3xl font-semibold text-center text-gray-800">What Our Customers Say</h2>
+        <h2 className="text-3xl font-semibold text-center text-gray-800">
+          What Our Customers Say
+        </h2>
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {/* Customer 1 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-xl text-gray-600">"The products have truly transformed my skin. Highly recommend!"</p>
-            <p className="mt-4 text-lg font-semibold text-gray-800">Nina Perera</p>
+            <p className="text-xl text-gray-600">
+              "These products have changed my skincare routine for the better!"
+            </p>
+            <p className="mt-4 text-lg font-semibold text-gray-800">Arushi Fernando</p>
           </div>
+
+          {/* Customer 2 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-xl text-gray-600">"Amazing quality and exceptional customer service!"</p>
-            <p className="mt-4 text-lg font-semibold text-gray-800">Ravindra Silva</p>
+            <p className="text-xl text-gray-600">
+              "The quality is unmatched. I've been using them daily!"
+            </p>
+            <p className="mt-4 text-lg font-semibold text-gray-800">Sanjay Perera</p>
           </div>
+
+          {/* Customer 3 */}
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-xl text-gray-600">"I can see visible results in just a few days. Very pleased!"</p>
-            <p className="mt-4 text-lg font-semibold text-gray-800">Anjali Kumar</p>
+            <p className="text-xl text-gray-600">
+              "I love how quickly the products arrived and the great customer service!"
+            </p>
+            <p className="mt-4 text-lg font-semibold text-gray-800">Lahiru Dias</p>
           </div>
         </div>
-
       </section>
+
     </div>
   );
 };

@@ -19,37 +19,38 @@ const ContactUsPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, subject, message } = formData;
 
-    // Validation
+    // Validate inputs
     if (!name || !email || !subject || !message) {
       toast.error("Please fill out all fields.");
       return;
     }
 
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/contact",  // Update with your backend endpoint
-        { name, email, subject, message }
-      );
-
+    // Using .then() and .catch() instead of async/await
+    axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/contact`,  // Make sure the URL is correct
+      { name, email, subject, message }
+    )
+    .then((response) => {
       if (response.status === 200) {
         toast.success("Message sent successfully!");
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
         toast.error("Unexpected response. Please try again.");
       }
-    } catch (error) {
+    })
+    .catch((error) => {
       console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again.");
-    }
+    });
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center shadow-lg bg-[url('/co.jpeg')] bg-cover bg-center">
-      <div className="w-full md:w-[750px]  h-[250px] bg-gray-800 shadow-2xl p-1 rounded-sm border border-neutral-800 shadow-2xl flex flex-col justify-center ">
+      <div className="w-full md:w-[500px]  h-[250px] bg-gray-800 shadow-2xl p-1 rounded-sm border border-neutral-800 shadow-2xl flex flex-col justify-center ">
         {/* Title */}
         <h1 className="text-3xl font-bold text-blue-50 text-center mb-3">Contact Us</h1>
 
@@ -113,7 +114,7 @@ const ContactUsPage = () => {
       </div>
 
       {/* Contact Form */}
-      <div className="md:w-[500px] w-full bg-black shadow-2xl p-6 rounded-sm mt-5 opacity-85 rounded-xl">
+      <div className="md:w-[500px] w-full bg-indigo-950 shadow-2xl p-10 rounded-sm mt-5 transparent-[50px] rounded-xl opacity-90">
         <h2 className="text-3xl font-bold text-center text-white mb-6">Send Us a Message</h2>
 
         <form onSubmit={handleSubmit} className="space-y-3">
