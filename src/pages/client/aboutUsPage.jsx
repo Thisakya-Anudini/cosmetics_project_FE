@@ -67,8 +67,8 @@ const AboutUsPage = () => {
       </div>
 
       {/* Footer or Contact Section */}
-      <div className="w-full bg-pink-600 py-10 mt-10">
-        <div className="text-center text-lg text-white">
+      <div className="w-full bg-pink-400 py-10 mt-10">
+        <div className="text-center text-lg text-black font-semibold">
           <p>If you have any questions or would like to know more about our products, feel free to contact us!</p>
         </div>
       </div>
