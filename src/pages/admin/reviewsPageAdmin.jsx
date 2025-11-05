@@ -6,6 +6,7 @@ export default function AdminReviewsPage() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch reviews on page load
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -20,6 +21,7 @@ export default function AdminReviewsPage() {
     fetchReviews();
   }, []);
 
+  // Display loading state
   if (loading) {
     return (
       <div className="p-6 text-center">
@@ -32,21 +34,26 @@ export default function AdminReviewsPage() {
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Customer Reviews</h1>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+      <div className="space-y-6"> {/* Space between each review */}
         {reviews.map((review) => (
           <div
             key={review._id}
-            className="bg-white shadow-lg rounded-lg p-6 transform hover:scale-105 transition-transform duration-300 ease-in-out"
+            className="bg-white shadow-lg rounded-lg p-6 flex flex-col space-y-4"
           >
+            {/* Review Header */}
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-semibold text-gray-900">{review.name}</h2>
-              <div className="flex">
+              <div className="flex space-x-1">
+                {/* Render Star Rating */}
                 {Array.from({ length: review.rating }).map((_, i) => (
-                  <FaStar key={i} className="text-yellow-400 text-xl mr-1" />
+                  <FaStar key={i} className="text-yellow-400 text-xl" />
                 ))}
               </div>
             </div>
-            <p className="mt-4 text-gray-700">{review.text}</p>
+
+            {/* Review Text */}
+            <p className="text-gray-700">{review.text}</p>
           </div>
         ))}
       </div>

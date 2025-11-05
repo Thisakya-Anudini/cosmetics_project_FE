@@ -79,28 +79,35 @@ export default function AdminContactPage() {
     <div className="p-8">
       <h1 className="text-4xl font-semibold text-gray-800 mb-8">Contact Messages</h1>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="space-y-6 ">
+        
+        
         {messages.map((msg) => (
           <div
             key={msg._id}
-            className={`bg-white rounded-lg shadow-lg p-6 hover:shadow-2xl transition-all duration-300 ease-in-out ${
-              msg.isRead ? "border-l-4 border-green-500" : "border-l-4 border-pink-300"
+            className={`flex justify-between items-center p-6 bg-white shadow-md rounded-lg ${
+              msg.isRead ? "border-l-4 border-gray-500" : "border-l-4 border-pink-500"
             }`}
           >
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-gray-800">{msg.name}</h2>
-              <BiSolidMessageDetail className="text-pink-500 text-4xl" />
-            </div>
-            <p className="mt-2 text-gray-600"><strong>Email:</strong> {msg.email}</p>
-            <p className="mt-2 text-gray-600"><strong>Subject:</strong> {msg.subject}</p>
-            <p className="mt-4 text-gray-700">{msg.message}</p>
+            
+            {/* Message Details */}
+            <div className="flex flex-1 flex-col">
+              <h2 className="text-xl font-semibold text-gray-800">{msg.name} </h2>
 
-            <div className="mt-4 flex justify-between">
+              <p className="mt-2 text-gray-600"><strong>Email:</strong> {msg.email}</p>
+              <p className="mt-2 text-gray-600"><strong>Subject:</strong> {msg.subject}</p>
+              <p className="mt-4 text-gray-700">{msg.message}</p>
+            </div>
+
+            {/* Action Buttons */}
+            
+            <div className="flex flex-col space-x-0 space-y-4 ml-6">
+              
               {/* Mark as Read Button */}
               {!msg.isRead && (
                 <button
                   onClick={() => markAsRead(msg._id)}
-                  className="text-blue-500 flex items-center space-x-2"
+                  className="text-blue-500 flex items-center space-x-3"
                 >
                   <FaCheckCircle className="text-blue-500" />
                   <span>Mark as Read</span>

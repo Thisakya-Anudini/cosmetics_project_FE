@@ -49,6 +49,7 @@ export default function AdminDashboard() {
   const cardStyle =
     "bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center text-center";
 
+  // Display loading state
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -58,6 +59,7 @@ export default function AdminDashboard() {
     );
   }
 
+  // Display error if fetching fails
   if (error) {
     return (
       <div className="p-6 text-center">
@@ -67,31 +69,37 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      <div className={cardStyle}>
-        <FaBoxOpen className="text-4xl text-blue-500 mb-2" />
-        <h2 className="text-xl font-bold">Products</h2>
-        <p className="text-2xl">{stats.products}</p>
-      </div>
-      <div className={cardStyle}>
-        <GiShoppingCart className="text-4xl text-green-500 mb-2" />
-        <h2 className="text-xl font-bold">Orders</h2>
-        <p className="text-2xl">{stats.orders}</p>
-      </div>
-      <div className={cardStyle}>
-        <FaUsers className="text-4xl text-purple-500 mb-2" />
-        <h2 className="text-xl font-bold">Users</h2>
-        <p className="text-2xl">{stats.users}</p>
-      </div>
-      <div className={cardStyle}>
-        <FaStar className="text-4xl text-yellow-500 mb-2" />
-        <h2 className="text-xl font-bold">Reviews</h2>
-        <p className="text-2xl">{stats.reviews}</p>
-      </div>
-      <div className={cardStyle}>
-        <FaEnvelope className="text-4xl text-red-500 mb-2" />
-        <h2 className="text-xl font-bold">Messages</h2>
-        <p className="text-2xl">{stats.contacts}</p>
+    <div className="relative p-6 h-screen bg-cover bg-center"
+      style={{ backgroundImage: 'url("/5.jpg")' }}
+    >
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 ">
+        <div className={cardStyle}>
+          <FaBoxOpen className="text-4xl text-blue-500 mb-2" />
+          <h2 className="text-xl font-bold">Products</h2>
+          <p className="text-2xl">{stats.products}</p>
+        </div>
+        <div className={cardStyle}>
+          <GiShoppingCart className="text-4xl text-green-500 mb-2" />
+          <h2 className="text-xl font-bold">Orders</h2>
+          <p className="text-2xl">{stats.orders}</p>
+        </div>
+        <div className={cardStyle}>
+          <FaUsers className="text-4xl text-purple-500 mb-2" />
+          <h2 className="text-xl font-bold">Users</h2>
+          <p className="text-2xl">{stats.users}</p>
+        </div>
+        <div className={cardStyle}>
+          <FaStar className="text-4xl text-yellow-500 mb-2" />
+          <h2 className="text-xl font-bold">Reviews</h2>
+          <p className="text-2xl">{stats.reviews}</p>
+        </div>
+        <div className={cardStyle}>
+          <FaEnvelope className="text-4xl text-red-500 mb-2" />
+          <h2 className="text-xl font-bold">Messages</h2>
+          <p className="text-2xl">{stats.contacts}</p>
+        </div>
       </div>
     </div>
   );
