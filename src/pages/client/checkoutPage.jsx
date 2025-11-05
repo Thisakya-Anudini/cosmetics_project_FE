@@ -103,127 +103,125 @@ export default function CheckoutPage() {
   }
 
   console.log(cart);
-    return (
-        <div className="w-[100vw]  max-w-[100vw] h-screen flex flex-col px-[10px] py-[50px] items-center ">
-            {cart.map((item,index) => { // map through the cart
-                return (
-                    <div
-                        key={item.productId} 
-                        className="w-full  md:w-[800px] h-[200px] md:h-[100px] m-[10px] shadow-2xl flex flex-row items-center relative "
-                    >
-                        <div className="md:w-[100px] w-[200px] justify-center items-center flex flex-col text-2xl md:text-md">
-                            <img src={item.image} className="w-[100px] h-[100px] object-cover"/>
-                            <div className=" h-full   flex-col justify-center pl-[10px] md:hidden flex">
-                                <span className=" font-bold text-center md:text-left">
-                                    {item.name}
-                                </span>
-                                {/* price */}
-                                <span className=" font-semibold text-center md:text-left">
-                                    {item.price.toLocaleString("en-US", {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2,
-                                    })}
-                                </span>
-                            </div>
-                        </div>
-                        <div className="w-[300px] h-full   flex-col justify-center pl-[10px] hidden md:flex">
-                            <span className=" font-bold text-center md:text-left">
-                                {item.name}
-                            </span>
+  return (
+    <div className="w-full max-w-[100vw] h-screen flex flex-col px-4 py-8 items-center bg-gray-50">
+      {/* Cart Items */}
+      {cart.map((item, index) => {
+        return (
+          <div
+            key={item.productId}
+            className="w-full md:w-[800px] h-[120px] m-4 shadow-lg flex flex-row items-center relative bg-white p-4 rounded-lg space-x-4"
+          >
+            {/* Product Image */}
+            <div className="md:w-[120px] w-[100px] justify-center items-center flex flex-col text-2xl md:text-md">
+              <img
+                src={item.image}
+                className="w-[80px] h-[80px] object-cover rounded-lg"
+                alt={item.name}
+              />
+            </div>
 
-                            {/* price */}
-                            <span className=" font-semibold text-center md:text-left ">
-                                {item.price.toLocaleString("en-US", {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })}
-                            </span>
-                            
-                        </div>
-                        <div className="w-[200px] h-full text-2xl md:text-md  flex flex-row justify-center items-center ">
-                            <button
-                                className="flex justify-center items-center w-[25px] h-[25px] rounded-lg bg-blue-700 text-white cursor-pointer hover:bg-blue-400"
-                                onClick={() => {
-                                    const newCart = [...cart];
-                                    newCart[index].quantity -= 1;
-                                    if (newCart[index].quantity <= 0) {
-                                        newCart.splice(index, 1);
-                                    }
-                                    setCart(newCart);
-                     
-                                }}
-                            >
-                                -
-                            </button>
-                            <span className="mx-[10px]">{item.quantity}</span>
-                            <button
-                                className="flex justify-center items-center w-[25px] h-[25px] rounded-lg bg-blue-700 text-white cursor-pointer hover:bg-blue-400"
-                                onClick={() => {
-                                    const newCart = [...cart];
-                                    newCart[index].quantity += 1;
-                                    setCart(newCart);
-                          
-                                }}
-                            >
-                                +
-                            </button>
-                        </div>
-                        <div className="w-[185px]  text-2xl md:text-md h-full flex justify-end items-center pr-[10px]">
-                            {/* total quantity * price */}
-                            <span className="font-semibold">
-                                {(item.quantity * item.price).toLocaleString("en-US", {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2,
-                                })}
-                            </span>
-                        </div>
-                        <button
-                            className="w-[30px] h-[30px] absolute top-[0px] right-[0px] md:top-[35px]  md:right-[-40px] cursor-pointer bg-red-700 shadow rounded-full flex justify-center items-center text-white border-[2px] border-red-700 hover:bg-white hover:text-red-700"
-                            onClick={() => {
-                                const newCart = [...cart]; // create a copy of the cart
-                                newCart.splice(index, 1);// remove the item
-                                setCart(newCart);// update the cart
-                            
-                            }}
-                        >
-                            <TbTrash className="text-xl" />
-                        </button>
-                    </div>
-                );
-            })}
-            <div className="md:w-[800px] w-full h-[100px] m-[10px] p-[10px] shadow-2xl flex flex-row items-center justify-end relative">
-                <span className="font-bold text-3xl ">
-                    Total:{" "}
-                    {getTotal().toLocaleString("en-US", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                    })}
-                </span>
+            {/* Product Details */}
+            <div className="w-[300px] h-full flex-col justify-center pl-[10px] flex">
+              <span className="font-bold">{item.name}</span>
+              
+              <span className="font-semibold">
+                {item.price.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+
+            {/* Quantity Control */}
+            <div className="w-[200px] h-full text-2xl flex flex-row justify-center items-center space-x-4">
+              <button
+                className="w-5 h-5 rounded-full bg-gray-400 text-black hover:bg-gray-500 flex justify-center items-center text-[27px] "
+                onClick={() => {
+                  const newCart = [...cart];
+                  newCart[index].quantity -= 1;
+                  if (newCart[index].quantity <= 0) {
+                    newCart.splice(index, 1);
+                  }
+                  setCart(newCart);
+                }}
+              >
+                -
+              </button>
+              <span className="text-lg">{item.quantity}</span>
+              <button
+                className="w-5 h-5 rounded-full bg-gray-400 text-black hover:bg-gray-500 flex justify-center items-center text-[20px]"
+                onClick={() => {
+                  const newCart = [...cart];
+                  newCart[index].quantity += 1;
+                  setCart(newCart);
+                }}
+              >
+                +
+              </button>
+            </div>
+
+
+            {/* Item Total */}
+            <div className="w-[185px] text-lg h-full flex justify-end items-center pr-[10px]">
+              <span className="font-semibold">
+                {(item.quantity * item.price).toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+
+            {/* Trash Icon (Remove Item) */}
+            <button
+              className="w-7 h-7 absolute top-0 right-0 mt-3 mr-3 bg-red-600 text-white rounded-full flex justify-center items-center hover:bg-red-400"
+              onClick={() => {
+                const newCart = [...cart];
+                newCart.splice(index, 1);
+                setCart(newCart);
+              }}
+            >
+              <TbTrash className="text-lg" />
+            </button>
+          </div>
+        );
+      })}
+
+      {/* Total and Place Order Button */}
+      <div className="w-full md:w-[800px] p-4 shadow-lg flex justify-between items-center bg-white rounded-lg mb-4">
+        <span className="font-bold text-3xl text-gray-800">
+          Total:{" "}
+          {getTotal().toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </span>
         <button
           onClick={placeOrder}
-          className="absolute left-[10px] w-[200px] text-2xl md:text-md md:w-[150px] h-[50px] cursor-pointer rounded-lg shadow-2xl bg-red-700 border-[1px]  text-white hover:bg-white hover:text-red-700 "
+          className="w-[200px] h-[50px] bg-pink-600 text-white rounded-lg hover:bg-pink-400 transition duration-300"
         >
           Place Order
         </button>
       </div>
 
-      <div className="md:w-[800px] w-full m-[10px] p-[10px] shadow-2xl flex flex-col md:flex-row items-center justify-center gap-2">
+      {/* User Info Form */}
+      <div className="w-full md:w-[800px] p-4 shadow-lg flex flex-col md:flex-row items-center gap-4 bg-white rounded-lg">
         <input
-          className="w-full md:w-[200px] h-[40px] border border-gray-300 rounded-lg p-[10px]"
+          className="w-full md:w-[200px] h-[40px] border border-gray-300 rounded-lg p-2"
           type="text"
           placeholder="Enter your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
-          className="w-full md:w-[200px] h-[40px] border border-gray-300 rounded-lg p-[10px]"
+          className="w-full md:w-[200px] h-[40px] border border-gray-300 rounded-lg p-2"
           type="text"
           placeholder="Enter your address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
         <input
-          className="w-full md:w-[200px] h-[40px] border border-gray-300 rounded-lg p-[10px]"
+          className="w-full md:w-[200px] h-[40px] border border-gray-300 rounded-lg p-2"
           type="text"
           placeholder="Enter your phone number"
           value={phone}
@@ -231,6 +229,7 @@ export default function CheckoutPage() {
         />
       </div>
     </div>
-  );
+  );  
+  
 }
 

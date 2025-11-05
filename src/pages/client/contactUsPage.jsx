@@ -50,12 +50,12 @@ const ContactUsPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center shadow-lg bg-[url('/co.jpeg')] bg-cover bg-center">
-      <div className="w-full md:w-[500px]  h-[250px] bg-gray-800 shadow-2xl p-1 rounded-sm border border-neutral-800 shadow-2xl flex flex-col justify-center ">
+      <div className="w-full md:w-[500px]  h-[400px] bg-gray-800 shadow-2xl  rounded-sm border border-neutral-800 shadow-2xl flex flex-col justify-center ">
         {/* Title */}
-        <h1 className="text-3xl font-bold text-blue-50 text-center mb-3">Contact Us</h1>
+        <h1 className="text-3xl  font-bold text-blue-50 text-center mb-3">Contact Us</h1>
 
         {/* Contact Details */}
-        <div className="space-y-1 text-md text-blue-50">
+        <div className="space-y-0 text-md text-blue-50">
           {/* Phone */}
           <div className="flex items-center justify-center space-x-5">
             <FaPhoneAlt className="text-3xl text-green-500" />
@@ -74,9 +74,22 @@ const ContactUsPage = () => {
             <p className="font-medium">No.50, Main Street, Colombo, Sri Lanka</p>
           </div>
 
+          {/* Google Map */}
+          <div className="w-[330px] h-[150px] mt-3 mx-auto">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126743.63706472777!2d79.70030497171875!3d6.921813274929139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo!5e0!3m2!1sen!2slk!4v1762269632076!5m2!1sen!2slk" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }}
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+
           {/* Social Media Links */}
-          <div className="text-md text-center">
-            <p className="font-semibold mb-3 mt-2">Follow Us:</p>
+          <div className="text-md text-center mt-3">
+            <p className="font-semibold mb-2 ">Follow Us:</p>
             <ul className="flex justify-center space-x-6">
               <li>
                 <a 
@@ -177,7 +190,7 @@ const ContactUsPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 px-6 bg-blue-700 text-white text-lg rounded-lg hover:bg-blue-600 transition duration-300"
+            className="w-full py-2 px-6 bg-pink-600 text-white text-lg rounded-lg hover:bg-pink-400 transition duration-300"
           >
             Send Message
           </button>

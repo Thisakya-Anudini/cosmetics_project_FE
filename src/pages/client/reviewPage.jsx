@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -7,21 +6,33 @@ const ReviewsPage = () => {
   const [reviews, setReviews] = useState([
     {
       id: 1,
-      name: "T.A. Chandrasekara",
+      name: "Ariya Fernando",
       rating: 5,
-      text: "Great products, excellent quality! Will definitely shop again.",
+      text: "I am in love with the skincare range. It’s so gentle and effective. Definitely coming back for more!",
     },
     {
       id: 2,
-      name: "Chamath Madumal K",
+      name: "Neha Wijesinghe",
       rating: 4,
-      text: "Good service and fast delivery. I love the products!",
+      text: "Amazing products, and the delivery was quick. Only wish there were more variety in the packaging options.",
     },
     {
       id: 3,
-      name: "K.H. Dilshan",
+      name: "Rohitha Kumarasinghe",
       rating: 5,
-      text: "Absolutely love the designs. Quality is amazing for the price.",
+      text: "Fantastic experience from start to finish! The products exceeded my expectations in every way.",
+    },
+    {
+      id: 4,
+      name: "Dilani Perera",
+      rating: 3,
+      text: "Good quality, but I had a bit of an issue with the packaging. Still, the product worked great.",
+    },
+    {
+      id: 5,
+      name: "Sanjaya Weerasinghe",
+      rating: 4,
+      text: "I've been using the products for a few weeks now, and they’ve made such a difference in my skin. Highly recommend!",
     },
   ]);
 
@@ -40,32 +51,32 @@ const ReviewsPage = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const { name, rating, text } = formData;
+    const { name, rating, text } = formData;
 
-  if (name && rating && text) {
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + "/api/reviews",
-        { name, rating: parseInt(rating), text }
-      );
+    if (name && rating && text) {
+      try {
+        const response = await axios.post(
+          import.meta.env.VITE_BACKEND_URL + "/api/reviews",
+          { name, rating: parseInt(rating), text }
+        );
 
-      // Add the new review to local state
-      setReviews((prev) => [response.data.review, ...prev]);
-      setFormData({ name: "", rating: 0, text: "" });
-      toast.success("Review submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting review:", error);
-      toast.error("Failed to submit review. Please try again.");
+        // Add the new review to local state
+        setReviews((prev) => [response.data.review, ...prev]);
+        setFormData({ name: "", rating: 0, text: "" });
+        toast.success("Review submitted successfully!");
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        toast.error("Failed to submit review. Please try again.");
+      }
+    } else {
+      toast.error("Please fill out all fields.");
     }
-  } else {
-    toast.error("Please fill out all fields.");
-  }
-};
+  };
 
   return (
-    <div className="py-16 px-4 bg-gray-50">
+    <div className="py-16 px-4 bg-white flex flex-col justify-center items-center">
       {/* Main Title */}
       <h1 className="text-4xl font-bold text-center text-gray-800">Customer Reviews</h1>
       <p className="mt-4 text-lg text-center text-gray-600">
@@ -75,7 +86,7 @@ const ReviewsPage = () => {
       {/* Reviews List */}
       <div className="mt-12 space-y-8">
         {reviews.map((review) => (
-          <div key={review.id} className="bg-white p-6 rounded-lg shadow-md">
+          <div key={review.id} className="bg-pink-100 p-6 rounded-lg shadow-md">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">{review.name}</h3>
@@ -106,8 +117,8 @@ const ReviewsPage = () => {
       </div>
 
       {/* Add New Review Section */}
-      <div className="mt-16 bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-3xl font-semibold text-center text-gray-800">Add Your Review</h2>
+      <div className="max-w-xl w-full mt-16 bg-pink-200 p-8 rounded-lg shadow-md">
+        <h2 className="text-3xl font-semibold text-center text-gray-900">Add Your Review</h2>
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           <div>
             <label className="block text-lg font-semibold text-gray-700">Your Name</label>
@@ -116,7 +127,7 @@ const ReviewsPage = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 mt-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="Enter your name"
               required
             />
@@ -128,7 +139,7 @@ const ReviewsPage = () => {
               name="rating"
               value={formData.rating}
               onChange={handleChange}
-              className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 mt-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               required
             >
               <option value={0}>Select Rating</option>
@@ -146,7 +157,7 @@ const ReviewsPage = () => {
               name="text"
               value={formData.text}
               onChange={handleChange}
-              className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-4 mt-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="Write your review"
               rows="4"
               required
@@ -156,7 +167,7 @@ const ReviewsPage = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-400 transition duration-300"
+              className="bg-pink-600 text-white py-3 px-6 rounded-lg hover:bg-pink-500 transition duration-300"
             >
               Submit Review
             </button>

@@ -1,36 +1,55 @@
-import { Link } from "react-router"
+import { Link } from "react-router-dom";
 
-export default function ProductCard(props) {// props are passed from the parent component. that means this component is a child component
-    const product = props.product
-    return (
+export default function ProductCard(props) {
+  const product = props.product;
 
-        <Link to={"/overview/"+product.productId} state={product} className="w-[300px] h-[400px] shadow-2xl shrink-0 rounded-2xl mt-[40px] flex flex-col overflow-hidden">
-            <img src={product.images[0]}  className="w-full h-[300px] object-cover" />
-            <div className="w-full h-[100px] flex flex-col  p-[10px]">
-                <span className="text-gray-500 text-[12px]">{product.productId}</span>
-                <h1 className="text-lg font-bold">{product.name}{" "}
-                    <span className="text-gray-500 text-[12px]">{product.category}</span>
-                </h1>  
-                    <div>
-                        { 
-                            product.labelledPrice > product.price ?(
-                              <p>
-                                <span className="line-through mr-[10px]">{product.labelledPrice} </span>
-                                <span>{product.price.toLocaleString('en-US',{minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
-                              </p>
-                            ):(
-                              <p>
-                                <span>{product.price} </span>
-                                
-                              </p>
-                            )
+  return (
+    <Link
+      to={"/overview/" + product.productId}
+      state={product}
+      className="w-[300px] h-[400px] shadow-lg shrink-0 rounded-2xl mt-[40px] flex flex-col overflow-hidden bg-white hover:shadow-xl transition-all duration-300"
+    >
+      {/* Product Image */}
+      <img src={product.images[0]} className="w-full h-[300px] object-cover rounded-t-lg" />
 
-                        }
+      {/* Product Details */}
+      <div className="w-full h-[100px] flex flex-col p-[8px] bg-slate-100 rounded-b-2xl">
+        <span className="text-gray-500 text-[10px]">{product.productId}</span>
 
-                    </div>
-                     
+        <h1 className="text-2xl font-medium text-gray-800 ">
+          {product.name}
+          <span className="text-gray-500 text-[10px]">{"   |  "}{product.category}</span>
+        </h1>
 
+        {/* Price Section */}
+        <div className="mt-2 flex flex-col">
+          {product.labelledPrice > product.price ? (
+            <div className="flex items-center">
+              <span className="line-through mr-[10px] text-red-600 text-[16px] font-semibold">
+                {product.labelledPrice.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+              <span className="text-emerald-500 font-semibold text-[20px]">
+                {product.price.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
             </div>
-        </Link>
-    )
+          ) : (
+            <div className="flex items-center">
+              <span className="text-black font-semibold text-[20px]">
+                {product.price.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
 }

@@ -10,27 +10,24 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   // Example featured product IDs (Replace these with actual IDs from your database)
-  const featuredIds = ["P003", "P008", "P006", "P004"];
-
+  const featuredIds = ["P003", "P008", "P005", "P004"];
 
   useEffect(() => {
-    // Refactored to use `.then` and `.catch` instead of async/await
     const fetchFeatured = () => {
       const requests = featuredIds.map((id) =>
         axios.get(import.meta.env.VITE_BACKEND_URL + `/api/products/${id}`)
       );
 
-      // Make all requests concurrently using `Promise.all`
       Promise.all(requests)
         .then((responses) => {
           const products = responses.map((res) => res.data);
-          setFeaturedProducts(products); // Set the products to the state
+          setFeaturedProducts(products);
         })
         .catch((error) => {
           console.error("Error fetching featured products:", error);
         })
         .finally(() => {
-          setLoading(false); // Stop the loading spinner once the data is fetched
+          setLoading(false);
         });
     };
 
@@ -38,30 +35,33 @@ const HomePage = () => {
   }, []); // Only run once when the component is mounted
 
   return (
-    <div className="py-16 px-4 bg-gray-50">
+    <div className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="text-center">
-        <h1 className="text-5xl font-bold text-gray-800">Welcome to Anu Cosmetics</h1>
-        <p className="mt-4 text-xl text-gray-600">
-          Explore our exclusive collection of skincare and beauty products at unbeatable prices!
+      <section className="text-center py-20 bg-gradient-to-r from-pink-200 to-pink-300 text-gray-900">
+        <h1 className="text-5xl font-extrabold mb-4 leading-tight">
+          Welcome to Anu Cosmetics
+        </h1>
+        <p className="text-lg max-w-3xl mx-auto mb-8">
+          Discover our exclusive range of skincare and beauty products designed
+          to enhance your natural beauty with elegance and affordability.
         </p>
-        <div className="mt-8">
-          <button
-            onClick={() => navigate("/products")}
-            className="bg-yellow-500 text-black py-3 px-6 rounded-lg hover:bg-yellow-400 transition duration-300"
-          >
-            Shop Now
-          </button>
-        </div>
+        <button
+          onClick={() => navigate("/products")}
+          className="bg-pink-600 text-white py-3 px-8 rounded-lg hover:bg-pink-500 transition duration-300 transform hover:scale-105"
+        >
+          Shop Now
+        </button>
       </section>
 
       {/* Featured Products Section */}
-      <section className="mt-16">
-        <h2 className="text-3xl font-semibold text-center text-gray-800">Featured Products</h2>
+      <section className="py-16 px-4">
+        <h2 className="text-4xl font-semibold text-center text-gray-900 mb-12">
+          Featured Products
+        </h2>
         {loading ? (
           <Loader />
         ) : (
-          <div className="m-8 ml-13 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 justify-items-center">
             {featuredProducts.map((product) => (
               <ProductCard key={product.productId} product={product} />
             ))}
@@ -70,17 +70,18 @@ const HomePage = () => {
       </section>
 
       {/* About Us Section */}
-      <section className="mt-16 bg-blue-100 p-8 rounded-lg shadow-md">
-        <h2 className="text-3xl font-semibold text-center text-gray-800">About Us</h2>
-        <p className="mt-4 text-xl text-center text-gray-600">
-          At Anu Cosmetics, we believe that beauty should be accessible to everyone. Our mission is to
-          provide high-quality, skincare products at affordable prices. Whether you're looking for daily care or
-          something special, we’ve got you covered.
+      <section className="bg-pink-50 py-16 px-4 rounded-xl shadow-lg mb-16">
+        <h2 className="text-4xl font-semibold text-center text-gray-900 mb-6">About Us</h2>
+        <p className="text-xl text-center text-gray-700 max-w-3xl mx-auto mb-8">
+          At Anu Cosmetics, we believe beauty should be accessible to everyone.
+          Our mission is to provide high-quality skincare products that cater to
+          your unique beauty needs. Whether you're looking for daily essentials or
+          something special, we have you covered.
         </p>
-        <div className="mt-8 text-center">
+        <div className="text-center">
           <button
             onClick={() => navigate("/about-us")}
-            className="bg-yellow-500 text-black py-3 px-6 rounded-lg hover:bg-yellow-400 transition duration-300"
+            className="bg-pink-600 text-white py-3 px-8 rounded-lg hover:bg-pink-500 transition duration-300 transform hover:scale-105"
           >
             Learn More
           </button>
@@ -88,37 +89,43 @@ const HomePage = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="mt-16">
-        <h2 className="text-3xl font-semibold text-center text-gray-800">
+      <section className="py-16 px-4">
+        <h2 className="text-4xl font-semibold text-center text-gray-900 mb-12">
           What Our Customers Say
         </h2>
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 justify-items-center">
           {/* Customer 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-xl text-gray-600">
-              "These products have changed my skincare routine for the better!"
+          <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
+            <p className="text-lg text-gray-600 mb-4">
+              "These products have completely transformed my skincare routine! My skin has never felt better."
             </p>
-            <p className="mt-4 text-lg font-semibold text-gray-800">Arushi Fernando</p>
+            <p className="text-lg font-semibold text-gray-900">Arushi Fernando</p>
           </div>
 
           {/* Customer 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-xl text-gray-600">
-              "The quality is unmatched. I've been using them daily!"
+          <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
+            <p className="text-lg text-gray-600 mb-4">
+              "I can't get enough of the quality and results. Truly exceptional skincare!"
             </p>
-            <p className="mt-4 text-lg font-semibold text-gray-800">Sanjay Perera</p>
+            <p className="text-lg font-semibold text-gray-900">Sanjay Perera</p>
           </div>
 
           {/* Customer 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-xl text-gray-600">
-              "I love how quickly the products arrived and the great customer service!"
+          <div className="bg-white p-8 rounded-lg shadow-lg hover:shadow-2xl transition duration-300">
+            <p className="text-lg text-gray-600 mb-4">
+              "Fast delivery and excellent customer service. Highly recommend!"
             </p>
-            <p className="mt-4 text-lg font-semibold text-gray-800">Lahiru Dias</p>
+            <p className="text-lg font-semibold text-gray-900">Lahiru Dias</p>
           </div>
         </div>
       </section>
 
+      {/* Footer Section */}
+      <footer className="bg-pink-300 text-gray-800 font-semibold py-8">
+        <div className="text-center">
+          <p>&copy; 2025 Anu Cosmetics</p>
+        </div>
+      </footer>
     </div>
   );
 };
